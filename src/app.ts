@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { dbConnection } from './config/dbConnect';
+// import { dbConnection } from './config/dbConnect';
 import connectDB from './config/dbConnect';
 
 const app = express();
@@ -14,19 +14,5 @@ app.get('/', (req, res) => {
 });
 
 mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
   app.listen(PORT, () => console.log(`Server is running on the port ${PORT}`));
 });
-
-// process.on('SIGINT', () => {
-//   dbConnection.close((err) => {
-//     if (err) {
-//       console.log('Error occurred while closing MongoDB connection', err);
-//       return false;
-//     } else {
-//       console.log('App terminated successfully');
-//       return true;
-//     }
-//     process.exit(0);
-//   });
-// });
