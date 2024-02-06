@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 interface CarOwner {
   email: string;
+  password: string;
   firstName: string;
   middleName?: string;
   lastName: string;
