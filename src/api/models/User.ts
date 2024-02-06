@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface CarOwner {
+export interface IUser extends Document {
   email: string;
   password: string;
   firstName: string;
@@ -13,7 +13,7 @@ interface CarOwner {
   licensePicture: string;
 }
 
-const carOwnerSchema = new Schema<CarOwner & Document>({
+const UserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true, index: true },
   firstName: { type: String, required: true },
   middleName: { type: String },
@@ -25,9 +25,4 @@ const carOwnerSchema = new Schema<CarOwner & Document>({
   licensePicture: { type: String, required: true },
 });
 
-const CarOwnerModel = mongoose.model<CarOwner & Document>(
-  'CarOwner',
-  carOwnerSchema
-);
-
-export default CarOwnerModel;
+export default mongoose.model<IUser>('User', UserSchema);
