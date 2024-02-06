@@ -15,3 +15,5 @@ const userSchema = Joi.object({
   driversLicenceNo: Joi.string().required(),
   avatar: Joi.string().required(),
 });
+
+export default userSchema;
