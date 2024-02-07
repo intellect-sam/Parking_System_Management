@@ -3,6 +3,8 @@ import { UserService } from '../../services/UserService';
 
 export const handleNewUser = async (req: Request, res: Response) => {
   try {
+    if (!req.body)
+      return res.status(400).json({ message: 'Supply the right details ' });
     const user = await UserService.createUser(req.body);
     res
       .status(201)
