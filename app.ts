@@ -1,18 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import connectDB from './src/config/dbConnect';
-import carOwnerRoute from './src/api/routes/auth/registerRoute';
+import carOwnerRoute from './src/api/routes/auth/register';
 
 const app = express();
 
 const PORT = process.env.PORT || 3500;
 
 connectDB();
-
-app.get('/', (req, res) => {
-  return res.send('hello world');
-});
-
+app.use(express.json());
+app.use(express.urlencoded());
 // routes
 app.use('/register', carOwnerRoute);
 
