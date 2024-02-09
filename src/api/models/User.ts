@@ -13,7 +13,7 @@ export interface IUser extends Document {
   licensePicture: string;
 }
 
-const UserSchema: Schema = new Schema({
+const userSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true, index: true },
   firstName: { type: String, required: true },
   middleName: { type: String },
@@ -25,4 +25,6 @@ const UserSchema: Schema = new Schema({
   licensePicture: { type: String, required: true },
 });
 
-export default mongoose.model<IUser>('User', UserSchema);
+const UserModel = mongoose.model<IUser>('User', userSchema);
+
+export default UserModel;

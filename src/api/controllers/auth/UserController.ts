@@ -14,6 +14,9 @@ export const handleNewUser = async (req: Request, res: Response) => {
       .status(201)
       .json({ message: 'Car owner created successfully', data: user });
   } catch (error) {
+    if (error.message.includes('already exists')) {
+      return res.status(409).json({ message: `Already Exist` });
+    }
     console.error('Error creating car owner:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
