@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3500;
 connectDB();
 app.use(express.json());
 app.use(express.urlencoded());
+
 // routes
 app.use('/register', carOwnerRoute);
 

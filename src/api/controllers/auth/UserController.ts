@@ -13,7 +13,7 @@ export const handleNewUser = async (req: Request, res: Response) => {
     return res
       .status(201)
       .json({ message: 'Car owner created successfully', data: user });
-  } catch (error) {
+  } catch (error: any) {
     if (error.message.includes('already exists')) {
       return res.status(409).json({ message: `Already Exist` });
     }

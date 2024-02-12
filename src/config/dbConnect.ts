@@ -1,15 +1,9 @@
-import mongoose from 'mongoose';
-require('dotenv').config();
+import { Pool } from 'pg';
 
-const connectDB = async (): Promise<void> => {
-  try {
-    await mongoose.connect(process.env.DATABASE_URL as string);
-
-    console.log('Connected to MongoDB');
-  } catch (err) {
-    console.error('Error connecting to MongoDB: ', err);
-    process.exit(1);
-  }
-};
-
-export default connectDB;
+export const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PASSWORD,
+  port: parseInt(process.env.DB_PORT || '5432'),
+});

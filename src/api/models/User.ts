@@ -1,6 +1,9 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { QueryResult } from 'pg';
+import { pool } from '../../config/dbConnect'; // Import the database connection pool
 
-export interface IUser extends Document {
+// Define the user interface
+export interface IUser {
+  id?: number; // Optional for auto-generated IDs
   email: string;
   password: string;
   firstName: string;
@@ -8,23 +11,38 @@ export interface IUser extends Document {
   lastName: string;
   phoneNumber: number;
   driversLicenseNo: string;
-  avatar: string;
-  carPicture: string;
-  licensePicture: string;
 }
 
-const userSchema: Schema = new Schema({
-  email: { type: String, required: true, unique: true, index: true },
-  firstName: { type: String, required: true },
-  middleName: { type: String },
-  lastName: { type: String, required: true },
-  phoneNumber: { type: Number, required: true },
-  driversLicenseNo: { type: String, required: true },
-  avatar: { type: String, required: true },
-  carPicture: { type: String, required: true },
-  licensePicture: { type: String, required: true },
-});
+// Define the UserModel class
+class UserModel {
+  // Method to create a new user
+  static async create(user: IUser): Promise<QueryResult> {
+    const query = `
+            INSERT INTO users(email, password, firstName, middleName, lastName, phoneNumber, driversLicenseNo)
+            VALUES($1, $2, $3, $4, $5, $6, $7)
+            RETURNING *
+        `;
+    const values = [
+      user.email,
+      user.password,
+      user.firstName,
+      user.middleName || null,
+      user.lastName,
+      user.phoneNumber,
+      user.driversLicenseNo,
+    ];
+    return await pool.query(query, values);
+  }
 
-const UserModel = mongoose.model<IUser>('User', userSchema);
+  // Method to get a user by email
+  static async getByEmail(email: string): Promise<QueryResult> {
+    const query = `
+            SELECT * FROM users
+            WHERE email = $1
+        `;
+    const values = [email];
+    return await pool.query(query, values);
+  }
+}
 
 export default UserModel;
