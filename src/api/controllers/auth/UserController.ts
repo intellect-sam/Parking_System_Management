@@ -9,13 +9,17 @@ export const handleNewUser = async (req: Request, res: Response) => {
     if (error) {
       return res.status(400).json(error.details);
     }
+
+    // Create user using the UserService
     const user = await UserService.createUser(req.body);
-    return res
-      .status(201)
-      .json({ message: 'Car owner created successfully', data: user });
+
+    return res.status(201).json({
+      message: 'Car owner created successfully',
+      data: user.toJSON(), // Convert Sequelize instance to plain object
+    });
   } catch (error: any) {
     if (error.message.includes('already exists')) {
-      return res.status(409).json({ message: `Already Exist` });
+      return res.status(409).json({ message: 'Already Exist' });
     }
     console.error('Error creating car owner:', error);
     return res.status(500).json({ message: 'Internal server error' });

@@ -1,29 +1,12 @@
-import express, { Application, Request, Response } from 'express';
-import mongoose from 'mongoose';
+import express from 'express';
 import carOwnerRoute from './api/routes/auth/register';
 
-class App {
-  public app: Application;
-
-  constructor() {
-    this.app = express();
-    this.routes();
-  }
-
-  protected routes(): void {
-    this.app.get('/', (req: Request, res: Response) => {
-      res.send('Welcome Home');
-    });
-  }
-}
-
-const app = new App().app;
-
+const app = express();
 const port = process.env.PORT || 3500;
 
 // connectDB();
-// app.use(express.json());
-// app.use(express.urlencoded());
+app.use(express.json());
+app.use(express.urlencoded());
 
 // routes
 app.use('/register', carOwnerRoute);

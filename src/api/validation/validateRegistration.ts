@@ -12,5 +12,5 @@ export const userSchema = Joi.object().keys({
   middleName: Joi.string().min(3).max(30).required(),
   lastName: Joi.string().min(3).max(30).required(),
   phoneNumber: Joi.string().required(),
-  driversLicenseNo: Joi.string().required(),
+  driverLicense: Joi.string().required(),
 });
