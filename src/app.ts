@@ -1,15 +1,31 @@
 import express from 'express';
 import carOwnerRoute from './api/routes/auth/register';
+import sequelize from './config/database';
 
-const app = express();
-const port = process.env.PORT || 3500;
+const main = async () => {
+  const app = express();
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    throw error;
+  }
 
-app.use(express.json());
-app.use(express.urlencoded());
+  const port = process.env.PORT || 3500;
 
-// routes
-app.use('/register', carOwnerRoute);
+  app.use(express.json());
+  app.use(express.urlencoded());
 
-app.listen(port, () => {
-  console.log('Server is running successfully');
+  // routes
+  app.use('/register', carOwnerRoute);
+
+  app.listen(port, () => {
+    console.log('Server is running successfully');
+  });
+};
+
+main().catch((error) => {
+  confirm('Error: ' + error.message);
 });
+
+// use migration: application to communicate with db

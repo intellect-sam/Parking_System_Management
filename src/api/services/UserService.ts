@@ -1,7 +1,11 @@
 import User from '../models/User';
 
+type ISetUser = {
+  email: string;
+};
+
 export class UserService {
-  static async createUser(userData: any) {
+  static async createUser(userData: ISetUser) {
     // You can replace 'any' with the specific type for userData
 
     // Check if the user already exists

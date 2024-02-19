@@ -15,7 +15,7 @@ export const handleNewUser = async (req: Request, res: Response) => {
 
     return res.status(201).json({
       message: 'Car owner created successfully',
-      data: user.toJSON(), // Convert Sequelize instance to plain object
+      data: user.toJSON(),
     });
   } catch (error: any) {
     if (error.message.includes('already exists')) {
